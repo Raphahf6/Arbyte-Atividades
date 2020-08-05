@@ -7,7 +7,7 @@ class Usuario {
   }
 }
 // criei o pedro e dei 50 reais pro pedro
-let usuario = new Usuario('Pedro', 50)
+let usuario = new Usuario('Pedro', 20)
 // tô criando um produto, que tem código, nome e valor
 class Produto {
   constructor(codigo, nome, valor) {
@@ -139,22 +139,29 @@ function comprar() {
 
 function pagarProduto(carrinho) {
   let saldo = usuario.saldoNoCartao
+  let produtosQueNaoPassaram = []
+  let produtosQuePassaram = []
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       carrinho.forEach(produto => {
 
         if (saldo < produto.valor) {
-          console.log(`O ${produto.nome} não passou porque o seu saldo é de ${saldo} reais`)
-        } else {
+          console.log(`O produto ${produto.nome} não passou porque o seu saldo é de ${saldo} reais`)
+          produtosQueNaoPassaram.push(produto)
 
+        } else {
           saldo -= produto.valor
-          console.log('Transação aceita')
+          console.log(`Produto: ${produto.nome} Transação aceita!`)
           console.log(`Seu saldo é ${saldo} reais`)
+          produtosQuePassaram.push(produto)
         }
 
       })
+      
+      
     }, 2000);
+
 
   })
 
